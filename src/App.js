@@ -3,6 +3,8 @@ import "./App.css";
 import Todo from "./Todo";
 import Header from "./Header";
 import AddTodo from "./AddTodo";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import About from "./About";
 class App extends React.Component {
   constructor() {
     super();
@@ -54,15 +56,26 @@ class App extends React.Component {
   };
   render() {
     return (
-      <div className="App">
-        <Header />
-        <AddTodo AddTodo={this.AddTodo} />
-        <Todo
-          handeDelete={this.handeDelete}
-          markComplete={this.markComplete}
-          todos={this.state.todos}
-        />
-      </div>
+      <Router>
+        <div className="App">
+          <Header />
+          <Route
+            exact
+            path="/"
+            render={props => (
+              <React.Fragment>
+                <AddTodo AddTodo={this.AddTodo} />
+                <Todo
+                  handeDelete={this.handeDelete}
+                  markComplete={this.markComplete}
+                  todos={this.state.todos}
+                />
+              </React.Fragment>
+            )}
+          />
+          <Route path="/About" component={About} />
+        </div>
+      </Router>
     );
   }
 }
